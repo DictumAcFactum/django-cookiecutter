@@ -1,4 +1,14 @@
-version: '3'
+version: "3.7"
+
+x-app_environment: &app_environment
+  environment:
+    - DEBUG
+    - ALLOWED_HOSTS
+    - POSTGRES_PASSWORD
+    - POSTGRES_HOST
+    - POSTGRES_PORT
+    - POSTGRES_NAME
+    - POSTGRES_USER
 
 services:
   backend:
@@ -11,13 +21,15 @@ services:
     - 8000:8000
     depends_on:
       - db
+    <<: *app_environment
 
   db:
     image: postgres:12-alpine
     volumes:
     - postgres_data:/var/lib/postgresql/data/
-    env_file:
-      - .env
+    environment:
+      - POSTGRES_PASSWORD
+
 
 volumes:
   postgres_data:

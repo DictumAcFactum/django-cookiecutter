@@ -1,7 +1,6 @@
 FROM python:3.8-alpine
 
 ENV PYTHONUNBUFFERED 1
-ENV PATH="${PATH}:/root/.local/bin"
 
 WORKDIR /app
 
