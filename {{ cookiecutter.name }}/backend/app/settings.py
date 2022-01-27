@@ -1,4 +1,5 @@
 import os
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -14,6 +15,7 @@ SECRET_KEY = os.environ.get(
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", False)
+TESTING = len(sys.argv) > 1 and sys.argv[1] == "test"
 ALLOWED_HOSTS: list = os.getenv("ALLOWED_HOSTS", "").split()
 
 # Application definition
@@ -103,3 +105,9 @@ STATIC_URL = "/static/"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Cache
+CACHE_TIMEOUT = 1
+if not TESTING:
+    CACHES = {"default": {"BACKEND": "redis_cache.RedisCache", "LOCATION": "redis:6379"}}
+    CACHE_TIMEOUT = 60 * 5
