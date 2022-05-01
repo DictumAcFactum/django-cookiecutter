@@ -36,6 +36,14 @@ services:
     volumes:
       - redisdata:/data
 
+  celery:
+    build: ./backend
+    command: celery -A app worker -l info -E -B
+    depends_on:
+      - db
+      - redis
+    <<: *app_environment
+
 
 volumes:
   redisdata:
