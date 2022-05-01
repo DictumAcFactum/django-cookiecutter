@@ -13,10 +13,10 @@ x-app_environment: &app_environment
 services:
   backend:
     build: ./backend
-    entrypoint: sh /app/backend/entrypoint.sh
-    command: python /app/backend/manage.py runserver 0.0.0.0:8000
+    entrypoint: sh entrypoint.sh
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
-    - .:/app
+    - ./backend:/app
     ports:
     - 8000:8000
     depends_on:
