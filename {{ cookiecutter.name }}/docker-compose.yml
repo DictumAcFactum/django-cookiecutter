@@ -4,6 +4,7 @@ x-app_environment: &app_environment
   environment:
     - DEBUG
     - ALLOWED_HOSTS
+    - INTERNAL_IPS
     - POSTGRES_PASSWORD
     - POSTGRES_HOST
     - POSTGRES_PORT

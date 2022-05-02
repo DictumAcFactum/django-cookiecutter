@@ -17,7 +17,9 @@ SECRET_KEY = os.environ.get(
 DEBUG = os.getenv("DEBUG", False)
 TESTING = len(sys.argv) > 1 and sys.argv[1] == "test"
 ALLOWED_HOSTS: list = os.getenv("ALLOWED_HOSTS", "").split()
-
+INTERNAL_IPS: list = []
+if DEBUG and "INTERNAL_IPS" in os.environ:
+    INTERNAL_IPS.extend(os.environ["INTERNAL_IPS"].split(","))
 # Application definition
 
 INSTALLED_APPS = [
@@ -27,8 +29,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # my apps
     "users.apps.UsersConfig",
+    # 3rd party
+    "rest_framework",
 ]
+
+if DEBUG:
+    INSTALLED_APPS.append("debug_toolbar")
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -39,6 +47,12 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+if DEBUG:
+    MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
+
+if DEBUG:
+    DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda x: DEBUG}
 
 ROOT_URLCONF = "app.urls"
 
