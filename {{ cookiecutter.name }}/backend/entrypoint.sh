@@ -1,3 +1,3 @@
 #!/bin/sh
-python backend/manage.py migrate
+python manage.py migrate
 exec "$@"
