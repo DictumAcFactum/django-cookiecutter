@@ -11,6 +11,19 @@ x-app_environment: &app_environment
     - POSTGRES_USER
 
 services:
+  nginx:
+    build:
+      context: ./nginx
+    depends_on:
+      - backend
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      - ENVIRONMENT
+      - SITE_HOSTS
+      - TLS_MODE
+
   backend:
     build: ./backend
     entrypoint: sh entrypoint.sh
