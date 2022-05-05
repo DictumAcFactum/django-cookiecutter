@@ -1,8 +1,6 @@
-# django-cookiecutter
+# Cookiecutter template for Django project.
 
-Cookiecutter шаблон для Django-проекта.
-
-# Сервисы:
+## Services:
 
 NGINX
 
@@ -14,7 +12,7 @@ REDIS (queue, cache)
 
 CELERY 
 
-# Usage:
+## Usage:
 
 `cookiecutter django-cookiecutter`
 
@@ -22,9 +20,9 @@ CELERY
 
 
 
-# Переменные окружения
+## Environment variables
 
-Для локальной разработки нужно добавить файл .env в корень проекта, пример контента:
+You should add `.env` file to the project's root. Example of the `.env` file
 ```
 DEBUG=True
 ALLOWED_HOSTS=*
