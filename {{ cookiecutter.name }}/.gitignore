@@ -89,3 +89,13 @@ node_modules/
 
 # dotenv
 *.env
+
+### Custom rules
+/db
+/local_static
+/backend/media
+/backend/static
+/ssl
+/requests
+/certs
+/.certs

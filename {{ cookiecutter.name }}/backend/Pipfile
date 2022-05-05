@@ -12,6 +12,9 @@ tzdata = "*"
 django-rest-framework = "*"
 django-debug-toolbar = "*"
 gunicorn = "*"
+factory-boy = "*"
+django-filter = "*"
+drf-spectacular = "*"
 
 [dev-packages]
 
