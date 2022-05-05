@@ -8,7 +8,7 @@ BACKEND - Django
 
 DB - Postgres
 
-REDIS (queue, cache)
+REDIS (queue, cache, session)
 
 CELERY 
 
@@ -33,4 +33,11 @@ POSTGRES_PASSWORD=postgres
 TLS_MODE=off
 SITE_HOST=localhost
 ENVIRONMENT=development
+
+# email
+EMAIL_HOST=
+EMAIL_PORT=
+EMAIL_HOST_USER=
+EMAIL_HOST_PASSWORD=
+EMAIL_USE_TLS=
 ```
