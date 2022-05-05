@@ -1,0 +1,73 @@
+version: '3.7'
+
+services:
+  nginx:
+    build:
+      context: ./nginx
+    restart: always
+    depends_on:
+      - backend
+    volumes:
+      - local_static:/var/www/local_static/
+      - static:/var/www/static/:ro
+      - acme.sh:/acme.sh:delegated
+      - certs:/etc/nginx/certs
+    environment:
+      - ENVIRONMENT=production
+      - SITE_HOST
+    ports:
+      - 80:80
+      - 443:443
+    logging:
+      driver: journald
+      options:
+        tag: nginx
+
+  backend:
+    restart: always
+    build:
+      context: ./backend
+    entrypoint: sh entrypoint.production.sh
+    command: gunicorn app.wsgi:application -w ${GUNICORN_WORKERS:-5} --keep-alive 120 -b 0.0.0.0:8000 --max-requests 10000 --max-requests-jitter 1000 --access-logfile - --error-logfile -
+    environment:
+      - DEBUG=False
+    depends_on:
+      - db
+    volumes:
+      - static:/app/static/:delegated
+    logging:
+      driver: journald
+      options:
+        tag: backend
+
+  celery:
+    restart: always
+    environment:
+      - DEBUG=False
+    logging:
+      driver: journald
+      options:
+        tag: celery
+
+  db:
+    restart: always
+    ports:
+      - 127.0.0.1:5432:5432
+    command: postgres -c 'shared_buffers=256MB' -c 'work_mem=8MB'
+    logging:
+      driver: journald
+      options:
+        tag: db
+
+  redis:
+    restart: always
+    logging:
+      driver: journald
+      options:
+        tag: redis
+
+volumes:
+  local_static:
+  static:
+  acme.sh:
+  certs:

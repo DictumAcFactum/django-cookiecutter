@@ -22,7 +22,7 @@ map $server_port $x_forwarded_host {
 
 <% if [ "$TLS_MODE" != "off" ]; then -%>
     server {
-        server_name <%= $SITE_HOSTS %>;
+        server_name <%= $SITE_HOST %>;
 
         listen 80;
         listen [::]:80;
@@ -32,7 +32,7 @@ map $server_port $x_forwarded_host {
 <% fi; -%>
 
 server {
-    server_name <%= $SITE_HOSTS %>;
+    server_name <%= $SITE_HOST %>;
 
     <% if [ "$TLS_MODE" != "off" ]; then -%>
         listen 443 ssl http2;
@@ -52,16 +52,16 @@ server {
     client_max_body_size 10M;
 
     <% if [ "$ENVIRONMENT" = "production" ]; then -%>
-        location /static/ {
+        location /s/ {
             alias /var/www/static/;
             expires 365d;
         }
-        location /media/ {
+        location /m/ {
             include backend;
             expires 365d;
         }
     <% else -%>
-        location /static/ {
+        location /s/ {
             include backend;
         }
     <% fi; -%>
