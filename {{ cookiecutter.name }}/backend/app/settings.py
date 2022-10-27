@@ -9,9 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY", "django-insecure-baeab%qv&0h83qy9)*2ibc8vf%=*k+mfqjaks^fkif*x593#*i"
-)
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", False)
@@ -20,8 +18,8 @@ ALLOWED_HOSTS: list = os.getenv("ALLOWED_HOSTS", "").split()
 INTERNAL_IPS: list = []
 if DEBUG and "INTERNAL_IPS" in os.environ:
     INTERNAL_IPS.extend(os.environ["INTERNAL_IPS"].split(","))
-# Application definition
 
+# Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -29,12 +27,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # my apps
+    # apps
     "users.apps.UsersConfig",
+    "common.apps.CommonConfig",
     # 3rd party
     "django_filters",
     "rest_framework",
     "drf_spectacular",
+    "django_extensions",
 ]
 
 if DEBUG:
@@ -52,8 +52,6 @@ MIDDLEWARE = [
 
 if DEBUG:
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
-
-if DEBUG:
     DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda x: DEBUG}
 
 ROOT_URLCONF = "app.urls"
@@ -163,5 +161,5 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ["rest_framework.authentication.SessionAuthentication"],
     "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-    # "EXCEPTION_HANDLER": "common.exceptions_handler.custom_exception_handler" TODO
+    "EXCEPTION_HANDLER": "common.exceptions_handler.custom_exception_handler",
 }
