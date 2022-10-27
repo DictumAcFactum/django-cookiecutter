@@ -26,7 +26,10 @@ You should add `.env` file to the project's root. Example of the `.env` file
 ```
 DEBUG=True
 ALLOWED_HOSTS=*
+SECRET_KEY=my_secret_key
 INTERNAL_IPS=localhost,127.0.0.1
+
+# db
 POSTGRES_PASSWORD=postgres
 
 # nginx

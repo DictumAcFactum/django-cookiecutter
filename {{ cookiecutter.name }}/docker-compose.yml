@@ -3,6 +3,7 @@ version: "3.7"
 x-app_environment: &app_environment
   environment:
     - DEBUG
+    - SECRET_KEY
     - ALLOWED_HOSTS
     - INTERNAL_IPS
     - POSTGRES_PASSWORD
